@@ -1,0 +1,41 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.jhj.open.baserecyclerview.MainActivity">
+    <item
+        android:id="@+id/action_addHeaderView"
+        android:title="@string/addHeaderView"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_addFooterView"
+        android:title="@string/addFooterView"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_removeHeaderView"
+        android:title="@string/removeHeaderView"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_removeFooterView"
+        android:title="@string/removeFooterView"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_removeAllHeaderView"
+        android:title="@string/removeAllHeaderView"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_removeAllFooterView"
+        android:title="@string/removeAllFooterView"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_moveHeaderView"
+        android:title="@string/moveHeaderView"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_moveFooterView"
+        android:title="@string/moveFooterView"
+        app:showAsAction="never"/>
+
+</menu>

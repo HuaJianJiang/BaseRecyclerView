@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">BaseRecyclerView</string>
+    <string name="addHeaderView">addHeaderView</string>
+    <string name="addFooterView">addFooterView</string>
+    <string name="removeHeaderView">removeHeaderView</string>
+    <string name="removeFooterView">removeFooterView</string>
+    <string name="removeAllHeaderView">removeAllHeaderView</string>
+    <string name="removeAllFooterView">removeAllFooterView</string>
+    <string name="moveHeaderView">moveHeaderView</string>
+    <string name="moveFooterView">moveFooterView</string>
+</resources>
