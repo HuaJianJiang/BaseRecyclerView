@@ -13,31 +13,31 @@ import com.jhj.lib.baserecyclerview.adapter.HeaderAdapter;
 /**
  * Created by jhj_Plus on 2016/10/11.
  */
-public class RecyclerViewWrapper extends RecyclerView {
+public class BaseRecyclerView extends RecyclerView {
     private static final String TAG = "BaseRecyclerView";
     private boolean mHasFixedSize = false;
     private boolean mHeaderFooterFullSpan = true;
 
-    public RecyclerViewWrapper(Context context) {
+    public BaseRecyclerView(Context context) {
         this(context, null);
     }
     
-    public RecyclerViewWrapper(Context context, @Nullable AttributeSet attrs)
+    public BaseRecyclerView(Context context, @Nullable AttributeSet attrs)
     {
         this(context, attrs, 0);
     }
 
-    public RecyclerViewWrapper(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public BaseRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initAttrs(attrs,defStyle);
         initView();
     }
     
     private void initAttrs(AttributeSet attrs, int defStyle) {
-        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.RecyclerViewWrapper);
-        mHasFixedSize = ta.getBoolean(R.styleable.RecyclerViewWrapper_hasFixedSize, false);
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.BaseRecyclerView);
+        mHasFixedSize = ta.getBoolean(R.styleable.BaseRecyclerView_hasFixedSize, false);
         mHeaderFooterFullSpan = ta.getBoolean(
-                R.styleable.RecyclerViewWrapper_header_footer_fullSpan, true);
+                R.styleable.BaseRecyclerView_header_footer_fullSpan, true);
         ta.recycle();
     }
 

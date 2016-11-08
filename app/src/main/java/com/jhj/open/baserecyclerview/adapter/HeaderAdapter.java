@@ -24,9 +24,6 @@ public class HeaderAdapter extends com.jhj.lib.baserecyclerview.adapter.HeaderAd
     private static final int TYPE_HEADER_1 = 0;
     private static final int TYPE_FOOTER_1 = 1;
 
-    private static final int[] DEFAULT_HEADERS = {1, 0, 1};
-    private static final int[] DEFAULT_FOOTERS = {0, 1, 0};
-
     private Random mRandom = new Random();
 
     public HeaderAdapter(Context context, MyAdapter adapter) {

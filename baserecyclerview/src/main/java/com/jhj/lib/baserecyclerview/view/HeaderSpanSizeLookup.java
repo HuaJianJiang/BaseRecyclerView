@@ -10,18 +10,22 @@ import com.jhj.lib.baserecyclerview.adapter.HeaderAdapter;
 public final class HeaderSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
     private static final String TAG = "HeaderSpanSizeLookup";
     private HeaderAdapter mHeaderAdapter;
-    private int mSpanCount;
+    private int mHeaderSpanCount;
 
-    public HeaderSpanSizeLookup(HeaderAdapter headerAdapter, int spanCount) {
+    public HeaderSpanSizeLookup(HeaderAdapter headerAdapter, int headerSpanCount) {
         mHeaderAdapter = headerAdapter;
-        mSpanCount = spanCount;
+        mHeaderSpanCount = headerSpanCount;
     }
 
     @Override
     public int getSpanSize(int position) {
-        if (mHeaderAdapter.isItemView(position)) return 1;
-        return mSpanCount;
+        if (mHeaderAdapter.isItemView(position)) {
+            return getItemSpanSize(position);
+        }
+        return mHeaderSpanCount;
     }
 
-
+    protected int getItemSpanSize(int position) {
+        return 1;
+    }
 }

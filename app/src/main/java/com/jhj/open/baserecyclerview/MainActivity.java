@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.jhj.lib.baserecyclerview.view.RecyclerViewWrapper;
+import com.jhj.lib.baserecyclerview.view.BaseRecyclerView;
 import com.jhj.open.baserecyclerview.adapter.HeaderAdapter;
 import com.jhj.open.baserecyclerview.adapter.MyAdapter;
 
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int TYPE_FOOTER_1=0;
     private static final int TYPE_FOOTER_2=1;
     private Random mRandom=new Random();
-    private RecyclerViewWrapper mRecyclerView;
+    private BaseRecyclerView mRecyclerView;
     private HeaderAdapter mAdapter;
 
     @Override
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         }
         locales = locales.subList(0, 28);
 
-        mRecyclerView = (RecyclerViewWrapper) findViewById(R.id.recyclerView);
+        mRecyclerView = (BaseRecyclerView) findViewById(R.id.recyclerView);
         //
         mAdapter = new HeaderAdapter(MainActivity.this, new MyAdapter(this, locales));
         mRecyclerView.setAdapter(mAdapter);
