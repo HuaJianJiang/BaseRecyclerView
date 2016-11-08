@@ -13,6 +13,7 @@ public final class HeaderSpanSizeLookup extends GridLayoutManager.SpanSizeLookup
     private int mHeaderSpanCount;
 
     public HeaderSpanSizeLookup(HeaderAdapter headerAdapter, int headerSpanCount) {
+        setSpanIndexCacheEnabled(true);
         mHeaderAdapter = headerAdapter;
         mHeaderSpanCount = headerSpanCount;
     }
