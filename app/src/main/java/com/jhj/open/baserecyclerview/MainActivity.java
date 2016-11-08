@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         locales = locales.subList(0, 28);
 
         mRecyclerView = (RecyclerViewWrapper) findViewById(R.id.recyclerView);
-
+        //
         mAdapter = new HeaderAdapter(MainActivity.this, new MyAdapter(this, locales));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(mAdapter.getItemDecoration());

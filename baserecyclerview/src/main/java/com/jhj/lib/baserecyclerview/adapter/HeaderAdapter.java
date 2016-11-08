@@ -15,8 +15,7 @@ import java.util.List;
 /**
  * Created by jhj_Plus on 2016/10/10.
  */
-public abstract class HeaderAdapter<HVH extends BaseViewHolder, FVH extends BaseViewHolder,
-        H, F>
+public abstract class HeaderAdapter<HVH extends BaseViewHolder, FVH extends BaseViewHolder, H, F>
         extends RecyclerView.Adapter<BaseViewHolder> implements AdapterWrapper
 {
     private static final String TAG = "HeaderAdapter";
@@ -39,8 +38,8 @@ public abstract class HeaderAdapter<HVH extends BaseViewHolder, FVH extends Base
         context = ctxt;
         inflater = LayoutInflater.from(ctxt);
         mAdapter = adapter;
-        mHeaders = headers == null ? new ArrayList<H>() : mHeaders;
-        mFooters = footers == null ? new ArrayList<F>() : mFooters;
+        mHeaders = headers == null ? new ArrayList<H>() : headers;
+        mFooters = footers == null ? new ArrayList<F>() : footers;
     }
 
     protected abstract HVH onCreateHeaderViewHolder(ViewGroup parent, int headerViewType);
