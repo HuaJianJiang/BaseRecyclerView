@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.jhj.lib.baserecyclerview.viewholder.BaseViewHolder;
 import com.jhj.open.baserecyclerview.R;
@@ -45,36 +46,29 @@ public class HeaderAdapter extends com.jhj.lib.baserecyclerview.adapter.HeaderAd
                 inflater.inflate(viewType == TYPE_HEADER_1 ? R.layout.header_1 : R.layout.header_2,
                         parent, false))
         {
-
+            @Override
+            protected void onItemClick(BaseViewHolder vh, View v, int position) {
+                Toast.makeText(context, "onHeaderClick=>"+position, Toast.LENGTH_SHORT).show();
+            }
         };
 
     }
 
     @Override
     protected void onBindHeaderViewHolder(BaseViewHolder vh, Integer data, int position) {
-//        int type = getHeaderViewType(position);
-//        Logger.e(TAG,"onBind=>position="+position);
-//        switch (type) {
-//            case TYPE_HEADER_2:
-//                RecyclerView recyclerView = vh.getView(R.id.recyclerView_hor);
-//                MyAdapter2 adapter2 = new MyAdapter2(context);
-//                recyclerView.setLayoutManager(
-//                        new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
-//                recyclerView.setHasFixedSize(true);
-//                recyclerView.addItemDecoration(adapter2.getItemDecoration());
-//                recyclerView.setAdapter(adapter2);
-//                break;
-//            case TYPE_HEADER_1:
-//                vh.getView(R.id.android);
-//                break;
-//        }
+
     }
 
     @Override
     public BaseViewHolder onCreateFooterViewHolder(ViewGroup parent, int viewType) {
         return new BaseViewHolder(LayoutInflater.from(context)
                 .inflate(viewType == TYPE_FOOTER_1 ? R.layout.footer_1 : R.layout.footer_2, parent,
-                        false)){};
+                        false)) {
+            @Override
+            protected void onItemClick(BaseViewHolder vh, View v, int position) {
+                Toast.makeText(context, "onFooterClick=>"+position, Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 
     @Override

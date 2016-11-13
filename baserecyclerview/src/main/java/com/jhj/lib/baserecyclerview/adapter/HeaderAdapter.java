@@ -280,4 +280,5 @@ public abstract class HeaderAdapter<HVH extends BaseViewHolder, FVH extends Base
         notifyItemMoved(getHeaderCount() + getWrappedItemCount() + fromPosition,
                 getHeaderCount() + getWrappedItemCount() + toPosition);
     }
+
 }

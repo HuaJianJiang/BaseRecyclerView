@@ -46,11 +46,11 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
     protected int[] onRegisterClickEvent() {return null;}
 
-    protected void onItemClick(BaseViewHolder vh, View v, int position) {}
+    protected void onItemClick(BaseViewHolder vh, View v, int adapterPosition) {}
 
     protected int[] onRegisterLongClickEvent() {return null;}
 
-    protected boolean onItemLongClick(BaseViewHolder vh, View v, int position) {return false;}
+    protected boolean onItemLongClick(BaseViewHolder vh, View v, int adapterPosition) {return false;}
 
     /**
      * 根据 id 查找 ItemView 里 childView

@@ -1,6 +1,7 @@
 package com.jhj.open.baserecyclerview.adapter;
 
 import android.view.View;
+import android.widget.Toast;
 
 import com.jhj.lib.baserecyclerview.viewholder.BaseViewHolder;
 
@@ -12,5 +13,11 @@ public class MyViewHolder extends BaseViewHolder {
 
     public MyViewHolder(View itemView) {
         super(itemView);
+
+    }
+
+    @Override
+    protected void onItemClick(BaseViewHolder vh, View v, int position) {
+        Toast.makeText(v.getContext(), "onItemClick=>"+position, Toast.LENGTH_SHORT).show();
     }
 }

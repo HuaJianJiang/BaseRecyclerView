@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         //
         mAdapter = new HeaderAdapter(MainActivity.this, new MyAdapter(this, locales));
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(mAdapter.getItemDecoration());
+      //  mRecyclerView.addItemDecoration(mAdapter.getItemDecoration());
 
         registerForContextMenu(mRecyclerView);
 
