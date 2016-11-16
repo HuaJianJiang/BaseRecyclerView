@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'baserecyclerview'
+
+    publishedGroupId = 'com.github.huajianjiang'
+    libraryName = 'baserecyclerview'
+    artifact = 'baserecyclerview'
+
+    libraryDescription = 'Custom RecyclerView.Adapter that implement features like ExpandableListView'
+
+    siteUrl = 'https://github.com/huajianjiang/BaseRecyclerView'
+    gitUrl = 'https://github.com/huajianjiang/BaseRecyclerView.git'
+
+    libraryVersion = '1.0.0-RC1'
+
+    developerId = 'huajianjiang'
+    developerName = 'HuaJian Jiang'
+    developerEmail = 'jhj.andever@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.0'
@@ -29,3 +53,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:recyclerview-v7:25.0.0'
 }
+
+apply from: 'https://raw.githubusercontent.com/huajianjiang/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/huajianjiang/JCenter/master/bintrayv1.gradle'
