@@ -4,8 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 
-import com.jhj.lib.baserecyclerview.utils.Logger;
-
 /**
  * Created by jhj_Plus on 2016/10/10.
  */
@@ -30,14 +28,14 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(viewEvent);
         //注册 子 view 点击监听器
         int[] clickViewIds = onRegisterClickEvent();
-        if (clickViewIds == null || clickViewIds.length == 0) return;
+        if (clickViewIds != null)
         for (int id : clickViewIds) {
             View v = getView(id);
             if (v != null) v.setOnClickListener(viewEvent);
         }
         //注册 子 view 长按监听器
         int[] longClickViewIds = onRegisterLongClickEvent();
-        if (longClickViewIds == null || longClickViewIds.length == 0) return;
+        if (longClickViewIds != null)
         for (int id : longClickViewIds) {
             View v = getView(id);
             if (v != null) v.setOnLongClickListener(viewEvent);
@@ -62,7 +60,6 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
         if (id == View.NO_ID) return null;
         View v = mCachedViews.get(id);
         if (v == null) {
-            Logger.e(TAG,"getView==>null");
             if (id == itemView.getId()) {
                 v = itemView;
             } else {
