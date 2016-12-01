@@ -3,5 +3,6 @@
     <declare-styleable name="BaseRecyclerView">
         <attr name="hasFixedSize" format="boolean|reference"/>
         <attr name="header_footer_fullSpan" format="boolean|reference"/>
+        <attr name="nestedScrollingEnabled" format="boolean|reference"/>
     </declare-styleable>
 </resources>
