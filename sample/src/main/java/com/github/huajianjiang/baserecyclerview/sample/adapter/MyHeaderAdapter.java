@@ -65,7 +65,7 @@ public class MyHeaderAdapter extends HeaderAdapter<BaseViewHolder, BaseViewHolde
                         parent, false))
         {
             @Override
-            protected void onItemClick(BaseViewHolder vh, View v, int position) {
+            public void onItemClick(BaseViewHolder vh, View v, int position) {
                 Toast.makeText(context, "onHeaderClick=>"+position, Toast.LENGTH_SHORT).show();
             }
         };
@@ -83,7 +83,7 @@ public class MyHeaderAdapter extends HeaderAdapter<BaseViewHolder, BaseViewHolde
                 .inflate(viewType == TYPE_FOOTER_1 ? R.layout.footer_1 : R.layout.footer_2, parent,
                         false)) {
             @Override
-            protected void onItemClick(BaseViewHolder vh, View v, int position) {
+            public void onItemClick(BaseViewHolder vh, View v, int position) {
                 Toast.makeText(context, "onFooterClick=>"+position, Toast.LENGTH_SHORT).show();
             }
         };

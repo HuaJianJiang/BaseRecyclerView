@@ -35,17 +35,17 @@ public class MyViewHolder extends BaseViewHolder {
     }
 
     @Override
-    protected void onItemClick(BaseViewHolder vh, View v, int position) {
+    public void onItemClick(BaseViewHolder vh, View v, int position) {
         Toast.makeText(v.getContext(), "onItemClick=>"+position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    protected int[] onRegisterLongClickEvent() {
+    public int[] onRegisterLongClickEvent() {
         return new int[]{R.id.item};
     }
 
     @Override
-    protected boolean onItemLongClick(BaseViewHolder vh, View v, int adapterPosition) {
+    public boolean onItemLongClick(BaseViewHolder vh, View v, int adapterPosition) {
         Toast.makeText(v.getContext(), "onItemLongClick=>" + adapterPosition, Toast.LENGTH_SHORT)
                 .show();
         return true;

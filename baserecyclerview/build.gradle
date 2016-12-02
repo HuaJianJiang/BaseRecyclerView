@@ -8,12 +8,12 @@ ext {
     libraryName = 'baserecyclerview'
     artifact = 'baserecyclerview'
 
-    libraryDescription = 'Base Package RecyclerView'
+    libraryDescription = 'An Android Packaged RecyclerView'
 
     siteUrl = 'https://github.com/huajianjiang/BaseRecyclerView'
     gitUrl = 'https://github.com/huajianjiang/BaseRecyclerView.git'
 
-    libraryVersion = '1.0.0-RC1'
+    libraryVersion = '1.0.0'
 
     developerId = 'huajianjiang'
     developerName = 'HuaJian Jiang'
@@ -32,7 +32,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0.0-RC1"
+        versionName "1.0.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
