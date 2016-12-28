@@ -26,10 +26,14 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
-import com.github.huajianjiang.baserecyclerview.sample.adapter.MyHeaderAdapter;
+import com.github.huajianjiang.baserecyclerview.adapter.BaseAdapter;
 import com.github.huajianjiang.baserecyclerview.sample.adapter.MyAdapter;
+import com.github.huajianjiang.baserecyclerview.sample.adapter.MyHeaderAdapter;
+import com.github.huajianjiang.baserecyclerview.sample.model.Test;
 import com.github.huajianjiang.baserecyclerview.view.BaseRecyclerView;
+import com.github.huajianjiang.baserecyclerview.viewholder.BaseViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +80,25 @@ public class MainActivity extends AppCompatActivity {
       //  mRecyclerView.addItemDecoration(mAdapter.getItemDecoration());
 
         registerForContextMenu(mRecyclerView);
+
+        BaseAdapter adapter = new BaseAdapter<BaseViewHolder, Test>(this) {
+
+            @Override
+            public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                return new BaseViewHolder(null) {
+                    @Override
+                    public void onItemClick(BaseViewHolder vh, View v, int adapterPosition) {
+                        super.onItemClick(vh, v, adapterPosition);
+                    }
+                };
+            }
+
+            @Override
+            public void onPopulateViewHolder(BaseViewHolder vh, Test item, int position) {
+
+            }
+
+        };
 
     }
 

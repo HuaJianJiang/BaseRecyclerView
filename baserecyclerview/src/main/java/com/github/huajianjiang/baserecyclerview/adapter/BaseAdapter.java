@@ -9,13 +9,10 @@ import com.github.huajianjiang.baserecyclerview.viewholder.BaseViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by jhj_Plus on 2016/10/10.
- */
 public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends RecyclerView.Adapter<BVH>
 {
     private static final String TAG = "BaseAdapter";
-    protected Context context;
+    protected Context ctxt;
     protected LayoutInflater inflater;
     private List<T> mItems;
 
@@ -23,18 +20,18 @@ public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends Recycle
         this(context, null);
     }
 
-    public BaseAdapter(Context context, List<T> items) {
-        this.context = context;
-        inflater = LayoutInflater.from(context);
+    public BaseAdapter(Context ctxt, List<T> items) {
+        this.ctxt = ctxt;
+        inflater = LayoutInflater.from(ctxt);
         mItems = items == null ? new ArrayList<T>() : items;
     }
 
-    protected abstract void onBindViewHolder(BVH vh, T item, int position);
+    public abstract void onPopulateViewHolder(BVH vh, T item, int position);
 
     @Override
     public void onBindViewHolder(BVH holder, int position) {
         T item = position < mItems.size() ? mItems.get(position) : null;
-        BaseAdapter.this.onBindViewHolder(holder, item, position);
+        onPopulateViewHolder(holder, item, position);
     }
 
     @Override
@@ -47,8 +44,8 @@ public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends Recycle
     }
 
     public void invalidateItems(List<T> newItems) {
-        if (newItems == null) return;
-        mItems = newItems;
+        if (newItems == null) mItems.clear();
+        else mItems = newItems;
         notifyDataSetChanged();
     }
 

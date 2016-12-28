@@ -4,10 +4,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 
+import com.github.huajianjiang.baserecyclerview.interfaces.ViewHolderCallback;
+
 /**
  * Created by jhj_Plus on 2016/10/10.
  */
-public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
+public abstract class BaseViewHolder extends RecyclerView.ViewHolder implements ViewHolderCallback {
     private static final String TAG = "BaseViewHolder";
 
     /**
@@ -24,8 +26,8 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
     private void init() {
         ViewEventListener listener = new ViewEventListener();
-        //设置 itemView 默认监听点击事件
-        itemView.setOnClickListener(listener);
+        //设置监听 itemView 点击事件
+        if (itemView.isClickable()) itemView.setOnClickListener(listener);
         //注册 子 view 点击监听器
         int[] clickViewIds = onRegisterClickEvent();
         if (clickViewIds != null)
@@ -42,12 +44,16 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    @Override
     public int[] onRegisterClickEvent() {return null;}
 
+    @Override
     public void onItemClick(BaseViewHolder vh, View v, int adapterPosition) {}
 
+    @Override
     public int[] onRegisterLongClickEvent() {return null;}
 
+    @Override
     public boolean onItemLongClick(BaseViewHolder vh, View v, int adapterPosition) {return false;}
 
     /**
