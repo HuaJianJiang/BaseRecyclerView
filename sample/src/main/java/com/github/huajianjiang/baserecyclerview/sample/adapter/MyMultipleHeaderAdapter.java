@@ -26,9 +26,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.github.huajianjiang.baserecyclerview.adapter.HeaderAdapter;
 import com.github.huajianjiang.baserecyclerview.sample.R;
-import com.github.huajianjiang.baserecyclerview.viewholder.BaseViewHolder;
+import com.github.huajianjiang.baserecyclerview.widget.BaseViewHolder;
+import com.github.huajianjiang.baserecyclerview.widget.MultipleHeaderAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,15 +37,16 @@ import java.util.Random;
 /**
  * Created by jhj_Plus on 2016/10/12.
  */
-public class MyHeaderAdapter extends HeaderAdapter<BaseViewHolder, BaseViewHolder, Integer, Integer>
+public class MyMultipleHeaderAdapter
+        extends MultipleHeaderAdapter<BaseViewHolder, BaseViewHolder, Integer, Integer>
 {
-    private static final String TAG = "MyHeaderAdapter";
+    private static final String TAG = "MyMultipleHeaderAdapter";
     private static final int TYPE_HEADER_1 = 0;
     private static final int TYPE_FOOTER_1 = 1;
 
     private Random mRandom = new Random();
 
-    public MyHeaderAdapter(Context context, MyAdapter adapter) {
+    public MyMultipleHeaderAdapter(Context context, MyAdapter adapter) {
         super(context, adapter, new ArrayList<>(Arrays.asList(1, 0, 1)),
                 new ArrayList<>(Arrays.asList(0, 1, 0)));
     }
@@ -55,7 +56,7 @@ public class MyHeaderAdapter extends HeaderAdapter<BaseViewHolder, BaseViewHolde
     }
 
     public void addRandomFooter() {
-        insertFooter(mRandom.nextInt(2),true);
+        insertFooter(mRandom.nextInt(2), true);
     }
 
     @Override
@@ -65,15 +66,15 @@ public class MyHeaderAdapter extends HeaderAdapter<BaseViewHolder, BaseViewHolde
                         parent, false))
         {
             @Override
-            public void onItemClick(BaseViewHolder vh, View v, int position) {
-                Toast.makeText(context, "onHeaderClick=>"+position, Toast.LENGTH_SHORT).show();
+            public void onItemClick(BaseViewHolder vh, View v) {
+                Toast.makeText(context, "onHeaderClick=>" + getAdapterPosition(),
+                        Toast.LENGTH_SHORT).show();
             }
         };
-
     }
 
     @Override
-    protected void onBindHeaderViewHolder(BaseViewHolder vh, Integer data, int position) {
+    public void onBindHeaderViewHolder(BaseViewHolder vh, Integer data, int position) {
 
     }
 
@@ -81,16 +82,18 @@ public class MyHeaderAdapter extends HeaderAdapter<BaseViewHolder, BaseViewHolde
     public BaseViewHolder onCreateFooterViewHolder(ViewGroup parent, int viewType) {
         return new BaseViewHolder(LayoutInflater.from(context)
                 .inflate(viewType == TYPE_FOOTER_1 ? R.layout.footer_1 : R.layout.footer_2, parent,
-                        false)) {
+                        false))
+        {
             @Override
-            public void onItemClick(BaseViewHolder vh, View v, int position) {
-                Toast.makeText(context, "onFooterClick=>"+position, Toast.LENGTH_SHORT).show();
+            public void onItemClick(BaseViewHolder vh, View v) {
+                Toast.makeText(context, "onFooterClick=>" + getAdapterPosition(),
+                        Toast.LENGTH_SHORT).show();
             }
         };
     }
 
     @Override
-    protected void onBindFooterViewHolder(BaseViewHolder vh, Integer data, int position,
+    public void onBindFooterViewHolder(BaseViewHolder vh, Integer data, int position,
             int inPosition)
     {
 
@@ -113,19 +116,20 @@ public class MyHeaderAdapter extends HeaderAdapter<BaseViewHolder, BaseViewHolde
     private class ItemDecoration extends RecyclerView.ItemDecoration {
         final int itemOffset = context.getResources().getDimensionPixelSize(
                 R.dimen.fab_margin);
+
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                RecyclerView.State state)
+                                   RecyclerView.State state)
         {
             final int childAdapterPos = parent.getChildAdapterPosition(view);
-            MyHeaderAdapter adapter= (MyHeaderAdapter) parent.getAdapter();
-            GridLayoutManager layoutManager=(GridLayoutManager)parent.getLayoutManager();
+            MyMultipleHeaderAdapter adapter = (MyMultipleHeaderAdapter) parent.getAdapter();
+            GridLayoutManager layoutManager = (GridLayoutManager) parent.getLayoutManager();
             final int spanCount = layoutManager.getSpanCount();
             outRect.set(itemOffset,
-                    adapter.isHeaderView(childAdapterPos) ? childAdapterPos == 0 ? itemOffset : 0
-                            : adapter.containHeader() ? 0
-                                    : childAdapterPos < spanCount + adapter.getHeaderCount()
-                                            ? itemOffset : 0, itemOffset, itemOffset);
+                    adapter.isHeaderView(childAdapterPos) ? childAdapterPos == 0 ? itemOffset : 0 :
+                            adapter.containHeader() ? 0 :
+                                    childAdapterPos < spanCount + adapter.getHeaderCount() ?
+                                            itemOffset : 0, itemOffset, itemOffset);
         }
     }
 

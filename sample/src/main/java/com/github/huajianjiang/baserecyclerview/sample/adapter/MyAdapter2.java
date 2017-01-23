@@ -25,7 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.huajianjiang.baserecyclerview.sample.R;
-import com.github.huajianjiang.baserecyclerview.viewholder.BaseViewHolder;
+import com.github.huajianjiang.baserecyclerview.widget.BaseViewHolder;
 
 
 /**
@@ -47,7 +47,6 @@ public class MyAdapter2 extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-
     }
 
     @Override

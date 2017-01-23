@@ -21,19 +21,16 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.github.huajianjiang.baserecyclerview.adapter.BaseAdapter;
 import com.github.huajianjiang.baserecyclerview.sample.adapter.MyAdapter;
-import com.github.huajianjiang.baserecyclerview.sample.adapter.MyHeaderAdapter;
-import com.github.huajianjiang.baserecyclerview.sample.model.Test;
-import com.github.huajianjiang.baserecyclerview.view.BaseRecyclerView;
-import com.github.huajianjiang.baserecyclerview.viewholder.BaseViewHolder;
+import com.github.huajianjiang.baserecyclerview.sample.adapter.MyMultipleHeaderAdapter;
+import com.github.huajianjiang.baserecyclerview.widget.BaseRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int TYPE_FOOTER_2=1;
     private Random mRandom=new Random();
     private BaseRecyclerView mRecyclerView;
-    private MyHeaderAdapter mAdapter;
+    private MyMultipleHeaderAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,32 +70,16 @@ public class MainActivity extends AppCompatActivity {
         }
         locales = locales.subList(0, 28);
 
-        mRecyclerView = (BaseRecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView = (BaseRecyclerView) findViewById(R.id.rv_top);
         //
-        mAdapter = new MyHeaderAdapter(MainActivity.this, new MyAdapter(this, locales));
+        mAdapter = new MyMultipleHeaderAdapter(MainActivity.this, new MyAdapter(this, locales));
         mRecyclerView.setAdapter(mAdapter);
       //  mRecyclerView.addItemDecoration(mAdapter.getItemDecoration());
 
         registerForContextMenu(mRecyclerView);
 
-        BaseAdapter adapter = new BaseAdapter<BaseViewHolder, Test>(this) {
-
-            @Override
-            public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new BaseViewHolder(null) {
-                    @Override
-                    public void onItemClick(BaseViewHolder vh, View v, int adapterPosition) {
-                        super.onItemClick(vh, v, adapterPosition);
-                    }
-                };
-            }
-
-            @Override
-            public void onPopulateViewHolder(BaseViewHolder vh, Test item, int position) {
-
-            }
-
-        };
+        RecyclerView rv_bottom= (RecyclerView) findViewById(R.id.rv_bottom);
+        rv_bottom.setAdapter(mAdapter);
 
     }
 

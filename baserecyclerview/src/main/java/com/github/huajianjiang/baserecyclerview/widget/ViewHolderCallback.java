@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 HuaJian Jiang
+ * Copyright (c) 2017 HuaJian Jiang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,21 @@
  *
  */
 
-package com.github.huajianjiang.baserecyclerview.interfaces;
+package com.github.huajianjiang.baserecyclerview.widget;
 
 import android.view.View;
-
-import com.github.huajianjiang.baserecyclerview.viewholder.BaseViewHolder;
 
 /**
  * @author HuaJian Jiang.
  *         Date 2016/12/29.
  */
-public interface ViewHolderCallback {
+interface ViewHolderCallback {
 
     int[] onRegisterClickEvent();
 
     int[] onRegisterLongClickEvent();
 
-    void onItemClick(BaseViewHolder vh, View v, int adapterPosition);
+    void onItemClick(BaseViewHolder vh, View v);
 
-    boolean onItemLongClick(BaseViewHolder vh, View v, int adapterPosition);
+    boolean onItemLongClick(BaseViewHolder vh, View v);
 }

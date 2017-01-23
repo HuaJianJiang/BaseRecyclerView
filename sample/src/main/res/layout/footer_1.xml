@@ -3,12 +3,15 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@color/md_deep_teal_200"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:clickable="true"
+              android:tag="footer1">
 
-    <ImageButton
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/ic_launcher"
+        android:clickable="false"/>
 
 </LinearLayout>

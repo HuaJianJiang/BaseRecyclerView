@@ -3,7 +3,9 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@color/md_deep_teal_200"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:clickable="true"
+              android:tag="footer2">
 
     <TextView
         android:id="@+id/header"

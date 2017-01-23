@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/item"
-              android:clickable="true"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/item"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:clickable="true"
+             android:orientation="vertical"
+             android:tag="item">
 
     <TextView
         android:id="@+id/tv"
@@ -15,6 +16,16 @@
         android:padding="@dimen/fab_margin"
         android:text="Hello World!"
         android:textColor="@color/md_grey_900"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:tag="tv"/>
 
-</LinearLayout>
+    <View
+        android:id="@+id/dot"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="50dp"
+        android:background="@color/colorAccent"
+        android:tag="dot"/>
+
+</FrameLayout>

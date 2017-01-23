@@ -1,4 +1,4 @@
-package com.github.huajianjiang.baserecyclerview.interfaces;
+package com.github.huajianjiang.baserecyclerview.widget;
 
 import android.support.v7.widget.RecyclerView;
 

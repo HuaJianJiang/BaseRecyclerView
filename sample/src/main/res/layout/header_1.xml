@@ -3,13 +3,16 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@color/md_deep_teal_200"
-              android:orientation="vertical">
+              android:clickable="true"
+              android:orientation="vertical"
+              android:tag="header1">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/android"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/ic_launcher"
+        android:clickable="false"/>
 
 </LinearLayout>

@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.github.huajianjiang.baserecyclerview.sample.R;
-import com.github.huajianjiang.baserecyclerview.viewholder.BaseViewHolder;
+import com.github.huajianjiang.baserecyclerview.widget.BaseViewHolder;
 
 /**
  * Created by jhj_Plus on 2016/10/10.
@@ -31,12 +31,12 @@ public class MyViewHolder extends BaseViewHolder {
 
     public MyViewHolder(View itemView) {
         super(itemView);
-
     }
 
     @Override
-    public void onItemClick(BaseViewHolder vh, View v, int position) {
-        Toast.makeText(v.getContext(), "onItemClick=>"+position, Toast.LENGTH_SHORT).show();
+    public void onItemClick(BaseViewHolder vh, View v) {
+        Toast.makeText(v.getContext(), "onItemClick=>" + getAdapterPosition(), Toast.LENGTH_SHORT)
+                .show();
     }
 
     @Override
@@ -45,9 +45,9 @@ public class MyViewHolder extends BaseViewHolder {
     }
 
     @Override
-    public boolean onItemLongClick(BaseViewHolder vh, View v, int adapterPosition) {
-        Toast.makeText(v.getContext(), "onItemLongClick=>" + adapterPosition, Toast.LENGTH_SHORT)
-                .show();
+    public boolean onItemLongClick(BaseViewHolder vh, View v) {
+        Toast.makeText(v.getContext(), "onItemLongClick=>" + getAdapterPosition(),
+                Toast.LENGTH_SHORT).show();
         return true;
     }
 }

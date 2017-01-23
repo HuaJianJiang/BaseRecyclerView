@@ -1,23 +1,37 @@
-package com.github.huajianjiang.baserecyclerview.adapter;
+/*
+ * Copyright (c) 2017 HuaJian Jiang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package com.github.huajianjiang.baserecyclerview.widget;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 
-import com.github.huajianjiang.baserecyclerview.viewholder.BaseViewHolder;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends RecyclerView.Adapter<BVH>
-{
+public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends RecyclerView.Adapter<BVH> {
     private static final String TAG = "BaseAdapter";
     protected Context ctxt;
     protected LayoutInflater inflater;
     private List<T> mItems;
 
-    public BaseAdapter(Context context) {
-        this(context, null);
+    public BaseAdapter(Context ctxt) {
+        this(ctxt, null);
     }
 
     public BaseAdapter(Context ctxt, List<T> items) {
