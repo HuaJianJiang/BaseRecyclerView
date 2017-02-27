@@ -27,10 +27,12 @@ import android.view.View;
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder implements ViewHolderCallback {
     private static final String TAG = "BaseViewHolder";
 
+    private RecyclerView mRv;
+
     /**
-     * itemView 或者 itemView 的子 view 交互事件监听器
+     * 与之关联的适配器
      */
-    private ViewEventWatcher mViewEventWatcher;
+    private BaseAdapter mAdapter;
     /**
      * ItemView 的 childView 缓存
      * 便于根据 id 查找对应的 View
@@ -40,42 +42,42 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder implements 
 
     public BaseViewHolder(View itemView) {
         super(itemView);
-        initView();
     }
 
     private void initView() {
+        if (mAdapter == null) return;
         final View iv = itemView;
         if (iv.isEnabled() && iv.isClickable())
-            iv.setOnClickListener(getViewEventWatcher());
+            iv.setOnClickListener(mAdapter.getViewEventWatcher());
         if (iv.isEnabled() && iv.isLongClickable())
-            iv.setOnLongClickListener(getViewEventWatcher());
+            iv.setOnLongClickListener(mAdapter.getViewEventWatcher());
         //注册 子 view 点击监听器
-        int[] clickViewIds = onRegisterClickEvent();
+        int[] clickViewIds = onRegisterClickEvent(mRv);
         if (clickViewIds != null)
         for (int id : clickViewIds) {
             View v = getView(id);
-            if (v != null) v.setOnClickListener(getViewEventWatcher());
+            if (v != null) v.setOnClickListener(mAdapter.getViewEventWatcher());
         }
         //注册 子 view 长按监听器
-        int[] longClickViewIds = onRegisterLongClickEvent();
+        int[] longClickViewIds = onRegisterLongClickEvent(mRv);
         if (longClickViewIds != null)
         for (int id : longClickViewIds) {
             View v = getView(id);
-            if (v != null) v.setOnLongClickListener(getViewEventWatcher());
+            if (v != null) v.setOnLongClickListener(mAdapter.getViewEventWatcher());
         }
     }
 
     @Override
-    public int[] onRegisterClickEvent() {return null;}
+    public int[] onRegisterClickEvent(RecyclerView rv){return null;}
 
     @Override
-    public void onItemClick(BaseViewHolder vh, View v) {}
+    public void onItemClick(RecyclerView rv, View v){}
 
     @Override
-    public int[] onRegisterLongClickEvent() {return null;}
+    public int[] onRegisterLongClickEvent(RecyclerView rv) {return null;}
 
     @Override
-    public boolean onItemLongClick(BaseViewHolder vh, View v) {return false;}
+    public boolean onItemLongClick(RecyclerView rv, View v) {return false;}
 
     /**
      * 根据 id 查找 ItemView 里 childView
@@ -98,22 +100,16 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder implements 
         return (T) v;
     }
 
-    private ViewEventWatcher getViewEventWatcher() {
-        if (mViewEventWatcher == null) {
-            mViewEventWatcher = new ViewEventWatcher();
-        }
-        return mViewEventWatcher;
+    /**
+     * 获得与之关联的 {@link BaseAdapter}
+     */
+    public BaseAdapter getAssociateAdapter() {
+        return mAdapter;
     }
 
-    private class ViewEventWatcher implements View.OnClickListener, View.OnLongClickListener {
-        @Override
-        public void onClick(View v) {
-            onItemClick(BaseViewHolder.this, v);
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            return onItemLongClick(BaseViewHolder.this, v);
-        }
+    void connectAdapter(RecyclerView rv, BaseAdapter adapter) {
+        this.mRv = rv;
+        this.mAdapter = adapter;
+        initView();
     }
 }

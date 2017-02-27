@@ -20,8 +20,8 @@ package com.github.huajianjiang.baserecyclerview.sample.adapter;
 import android.content.Context;
 import android.view.ViewGroup;
 
-import com.github.huajianjiang.baserecyclerview.widget.BaseAdapter;
 import com.github.huajianjiang.baserecyclerview.sample.R;
+import com.github.huajianjiang.baserecyclerview.widget.BaseAdapter;
 
 import java.util.List;
 
@@ -36,12 +36,12 @@ public class MyAdapter extends BaseAdapter<MyViewHolder,String> {
     }
 
     @Override
-    public void onPopulateViewHolder(MyViewHolder vh, String data, int position) {
-
+    public MyViewHolder onCreateBaseViewHolder(ViewGroup parent, int viewType) {
+        return new MyViewHolder(inflater.inflate(R.layout.item, parent, false));
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(inflater.inflate(R.layout.item, parent, false));
+    public void onBindBaseViewHolder(MyViewHolder holder, int position) {
     }
+
 }

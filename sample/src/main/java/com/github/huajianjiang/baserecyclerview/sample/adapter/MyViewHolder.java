@@ -17,6 +17,7 @@
 
 package com.github.huajianjiang.baserecyclerview.sample.adapter;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
@@ -34,19 +35,19 @@ public class MyViewHolder extends BaseViewHolder {
     }
 
     @Override
-    public void onItemClick(BaseViewHolder vh, View v) {
+    public void onItemClick(RecyclerView rv, View v) {
         Toast.makeText(v.getContext(), "onItemClick=>" + getAdapterPosition(), Toast.LENGTH_SHORT)
                 .show();
     }
 
     @Override
-    public int[] onRegisterLongClickEvent() {
+    public int[] onRegisterLongClickEvent(RecyclerView rv) {
         return new int[]{R.id.item};
     }
 
     @Override
-    public boolean onItemLongClick(BaseViewHolder vh, View v) {
-        Toast.makeText(v.getContext(), "onItemLongClick=>" + getAdapterPosition(),
+    public boolean onItemLongClick(RecyclerView rv, View v) {
+        Toast.makeText(rv.getContext(), "onItemLongClick=>" + getAdapterPosition(),
                 Toast.LENGTH_SHORT).show();
         return true;
     }

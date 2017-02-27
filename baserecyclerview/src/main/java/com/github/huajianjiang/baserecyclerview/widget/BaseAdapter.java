@@ -20,15 +20,30 @@ package com.github.huajianjiang.baserecyclerview.widget;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends RecyclerView.Adapter<BVH> {
     private static final String TAG = "BaseAdapter";
+
     protected Context ctxt;
+
     protected LayoutInflater inflater;
+
     private List<T> mItems;
+
+    /**
+     * 当前所有监听适配器的 RecyclerView 集合
+     */
+    private List<RecyclerView> mAttachedRecyclerViews = new ArrayList<>(2);
+
+    /**
+     * itemView 或者 itemView 的子 view 交互事件监听器
+     */
+    private ViewEventWatcher mViewEventWatcher;
 
     public BaseAdapter(Context ctxt) {
         this(ctxt, null);
@@ -40,12 +55,20 @@ public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends Recycle
         mItems = items == null ? new ArrayList<T>() : items;
     }
 
-    public abstract void onPopulateViewHolder(BVH vh, T item, int position);
+    public abstract BVH onCreateBaseViewHolder(ViewGroup parent, int viewType);
+    public abstract void onBindBaseViewHolder(BVH holder, int position);
+
+    @Override
+    public BVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        BVH bvh = onCreateBaseViewHolder(parent, viewType);
+        RecyclerView rv = parent instanceof RecyclerView ? (RecyclerView) parent : null;
+        bvh.connectAdapter(rv, BaseAdapter.this);
+        return bvh;
+    }
 
     @Override
     public void onBindViewHolder(BVH holder, int position) {
-        T item = position < mItems.size() ? mItems.get(position) : null;
-        onPopulateViewHolder(holder, item, position);
+        onBindBaseViewHolder(holder, position);
     }
 
     @Override
@@ -58,8 +81,8 @@ public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends Recycle
     }
 
     public void invalidateItems(List<T> newItems) {
-        if (newItems == null) mItems.clear();
-        else mItems = newItems;
+        mItems.clear();
+        if (newItems != null) mItems = newItems;
         notifyDataSetChanged();
     }
 
@@ -127,4 +150,48 @@ public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends Recycle
         notifyItemMoved(fromPosition, toPosition);
     }
 
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        mAttachedRecyclerViews.add(recyclerView);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        mAttachedRecyclerViews.remove(recyclerView);
+    }
+
+    ViewEventWatcher getViewEventWatcher() {
+        if (mViewEventWatcher == null) {
+            mViewEventWatcher = new ViewEventWatcher();
+        }
+        return mViewEventWatcher;
+    }
+
+    private class ViewEventWatcher implements View.OnClickListener, View.OnLongClickListener {
+        @Override
+        public void onClick(View v) {
+            for (RecyclerView parent : mAttachedRecyclerViews) {
+                BaseViewHolder vh = (BaseViewHolder) parent.findContainingViewHolder(v);
+                if (vh != null) {
+                    vh.onItemClick(parent, v);
+                    break;
+                }
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            boolean handled = false;
+            for (RecyclerView parent : mAttachedRecyclerViews) {
+                BaseViewHolder vh = (BaseViewHolder) parent.findContainingViewHolder(v);
+                if (vh != null) {
+                    handled = vh.onItemLongClick(parent, v);
+                    break;
+                }
+            }
+            return handled;
+        }
+    }
 }

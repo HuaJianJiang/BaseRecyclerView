@@ -66,7 +66,7 @@ public class MyMultipleHeaderAdapter
                         parent, false))
         {
             @Override
-            public void onItemClick(BaseViewHolder vh, View v) {
+            public void onItemClick(RecyclerView rv, View v) {
                 Toast.makeText(context, "onHeaderClick=>" + getAdapterPosition(),
                         Toast.LENGTH_SHORT).show();
             }
@@ -85,7 +85,7 @@ public class MyMultipleHeaderAdapter
                         false))
         {
             @Override
-            public void onItemClick(BaseViewHolder vh, View v) {
+            public void onItemClick(RecyclerView rv, View v) {
                 Toast.makeText(context, "onFooterClick=>" + getAdapterPosition(),
                         Toast.LENGTH_SHORT).show();
             }

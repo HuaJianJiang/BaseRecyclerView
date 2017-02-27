@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int TYPE_HEADER_2=1;
     private static final int TYPE_FOOTER_1=0;
     private static final int TYPE_FOOTER_2=1;
-    private Random mRandom=new Random();
+    private Random mRandom = new Random();
     private BaseRecyclerView mRecyclerView;
     private MyMultipleHeaderAdapter mAdapter;
 

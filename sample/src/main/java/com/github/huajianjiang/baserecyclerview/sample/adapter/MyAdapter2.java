@@ -42,7 +42,12 @@ public class MyAdapter2 extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new BaseViewHolder(LayoutInflater.from(mContext).inflate(
-                R.layout.item_tab,parent,false)){};
+                R.layout.item_tab,parent,false)){
+            @Override
+            public void onItemClick(RecyclerView rv, View v) {
+                super.onItemClick(rv, v);
+            }
+        };
     }
 
     @Override

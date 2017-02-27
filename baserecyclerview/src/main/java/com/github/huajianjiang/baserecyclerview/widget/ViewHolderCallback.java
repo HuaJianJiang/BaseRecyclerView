@@ -17,6 +17,7 @@
 
 package com.github.huajianjiang.baserecyclerview.widget;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
@@ -24,12 +25,11 @@ import android.view.View;
  *         Date 2016/12/29.
  */
 interface ViewHolderCallback {
+    int[] onRegisterClickEvent(RecyclerView rv);
 
-    int[] onRegisterClickEvent();
+    void onItemClick(RecyclerView rv, View v);
 
-    int[] onRegisterLongClickEvent();
+    int[] onRegisterLongClickEvent(RecyclerView rv);
 
-    void onItemClick(BaseViewHolder vh, View v);
-
-    boolean onItemLongClick(BaseViewHolder vh, View v);
+    boolean onItemLongClick(RecyclerView rv, View v);
 }
