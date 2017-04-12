@@ -55,12 +55,12 @@ public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends Recycle
         mItems = items == null ? new ArrayList<T>() : items;
     }
 
-    public abstract BVH onCreateBaseViewHolder(ViewGroup parent, int viewType);
-    public abstract void onBindBaseViewHolder(BVH holder, int position);
+    public abstract BVH onBuildViewHolder(ViewGroup parent, int viewType);
+    public abstract void onPopulateViewHolder(BVH holder, int position);
 
     @Override
     public BVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        BVH bvh = onCreateBaseViewHolder(parent, viewType);
+        BVH bvh = onBuildViewHolder(parent, viewType);
         RecyclerView rv = parent instanceof RecyclerView ? (RecyclerView) parent : null;
         bvh.connectAdapter(rv, BaseAdapter.this);
         return bvh;
@@ -68,7 +68,7 @@ public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends Recycle
 
     @Override
     public void onBindViewHolder(BVH holder, int position) {
-        onBindBaseViewHolder(holder, position);
+        onPopulateViewHolder(holder, position);
     }
 
     @Override
@@ -194,4 +194,6 @@ public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends Recycle
             return handled;
         }
     }
+
+
 }

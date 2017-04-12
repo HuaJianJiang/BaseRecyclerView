@@ -36,12 +36,12 @@ public class MyAdapter extends BaseAdapter<MyViewHolder,String> {
     }
 
     @Override
-    public MyViewHolder onCreateBaseViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onBuildViewHolder(ViewGroup parent, int viewType) {
         return new MyViewHolder(inflater.inflate(R.layout.item, parent, false));
     }
 
     @Override
-    public void onBindBaseViewHolder(MyViewHolder holder, int position) {
+    public void onPopulateViewHolder(MyViewHolder holder, int position) {
     }
 
 }

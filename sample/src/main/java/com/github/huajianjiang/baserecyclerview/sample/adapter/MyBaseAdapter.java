@@ -35,12 +35,12 @@ public class MyBaseAdapter extends BaseAdapter<MyViewHolder, Test> {
     }
 
     @Override
-    public MyViewHolder onCreateBaseViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onBuildViewHolder(ViewGroup parent, int viewType) {
         return null;
     }
 
     @Override
-    public void onBindBaseViewHolder(MyViewHolder holder, int position) {
+    public void onPopulateViewHolder(MyViewHolder holder, int position) {
 
     }
 

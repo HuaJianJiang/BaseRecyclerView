@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.github.huajianjiang.baserecyclerview.R;
 
@@ -32,6 +33,9 @@ import com.github.huajianjiang.baserecyclerview.R;
 public class BaseRecyclerView extends RecyclerView {
     private static final String TAG = "BaseRecyclerView";
     private boolean mHeaderFooterFullSpan = true;
+    private EmptyDataObserver mObserver;
+    private Adapter mAdapter;
+    private View mEmptyView;
 
     public BaseRecyclerView(Context context) {
         this(context, null);
@@ -61,7 +65,6 @@ public class BaseRecyclerView extends RecyclerView {
         setFocusable(nestedScrollingEnabled);
     }
 
-
     @Override
     public void setLayoutManager(LayoutManager layout) {
         super.setLayoutManager(layout);
@@ -79,6 +82,8 @@ public class BaseRecyclerView extends RecyclerView {
     @Override
     public void setAdapter(Adapter adapter) {
         super.setAdapter(adapter);
+        mAdapter = adapter;
+        checkEmptyStatus();
         if (mHeaderFooterFullSpan && adapter instanceof MultipleHeaderAdapter) {
             MultipleHeaderAdapter multipleHeaderAdapter = (MultipleHeaderAdapter) adapter;
             LayoutManager layout = getLayoutManager();
@@ -90,4 +95,44 @@ public class BaseRecyclerView extends RecyclerView {
         }
     }
 
+    public void setEmptyView(View emptyView) {
+        mEmptyView = emptyView;
+        checkEmptyStatus();
+    }
+
+    private void checkEmptyStatus() {
+        if (mAdapter != null && mObserver != null)
+            mAdapter.unregisterAdapterDataObserver(mObserver);
+        if (mAdapter != null && mEmptyView != null)
+            mAdapter.registerAdapterDataObserver(getObserver());
+        updateEmptyStatus(mAdapter == null || mAdapter.getItemCount() == 0);
+    }
+
+    private EmptyDataObserver getObserver() {
+        if (mObserver == null) {
+            mObserver = new EmptyDataObserver();
+        }
+        return mObserver;
+    }
+
+    private class EmptyDataObserver extends RecyclerView.AdapterDataObserver {
+        @Override
+        public void onChanged() {
+            updateEmptyStatus(mAdapter == null || mAdapter.getItemCount() == 0);
+        }
+    }
+
+    private void updateEmptyStatus(boolean empty) {
+        if (empty) {
+            if (mEmptyView == null) {
+                setVisibility(View.VISIBLE);
+            } else {
+                setVisibility(View.GONE);
+                mEmptyView.setVisibility(VISIBLE);
+            }
+        } else {
+            if (mEmptyView != null) mEmptyView.setVisibility(GONE);
+            setVisibility(View.VISIBLE);
+        }
+    }
 }
