@@ -18,22 +18,28 @@
 package com.github.huajianjiang.baserecyclerview.widget;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
+
+import com.github.huajianjiang.baserecyclerview.util.Predications;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends RecyclerView.Adapter<BVH> {
+public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends RecyclerView
+        .Adapter<BVH> implements Filterable {
     private static final String TAG = "BaseAdapter";
-
-    protected Context ctxt;
-
-    protected LayoutInflater inflater;
-
+    private Context mCtxt;
+    private LayoutInflater mInflater;
     private List<T> mItems;
+
+    private BaseFilter mFilter;
+    private List<T> mOriginalItems;
 
     /**
      * 当前所有监听适配器的 RecyclerView 集合
@@ -50,8 +56,8 @@ public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends Recycle
     }
 
     public BaseAdapter(Context ctxt, List<T> items) {
-        this.ctxt = ctxt;
-        inflater = LayoutInflater.from(ctxt);
+        mCtxt = ctxt;
+        mInflater = LayoutInflater.from(ctxt);
         mItems = items == null ? new ArrayList<T>() : items;
     }
 
@@ -76,13 +82,29 @@ public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends Recycle
         return mItems.size();
     }
 
+    public Context getContext() {
+        return mCtxt;
+    }
+
+    public LayoutInflater getLayoutInflater() {
+        return mInflater;
+    }
+
     public List<T> getItems() {
         return mItems;
     }
 
-    public void invalidateItems(List<T> newItems) {
+    public void invalidate(List<T> newItems) {
         mItems.clear();
-        if (newItems != null) mItems = newItems;
+        if (mOriginalItems != null) {
+            mOriginalItems.clear();
+        }
+        if (newItems != null) {
+            mItems = newItems;
+            if (mOriginalItems != null) {
+                mOriginalItems.addAll(newItems);
+            }
+        }
         notifyDataSetChanged();
     }
 
@@ -94,59 +116,81 @@ public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends Recycle
         return mItems.get(position);
     }
 
-    public void insertItem(T item) {
-        insertItem(item, false);
+    public int getPosition(@Nullable T item) {
+        return mItems.indexOf(item);
     }
 
-    public void insertItem(T item, boolean reverse) {
-        insertItem(reverse ? 0 : mItems.size(), item);
+    public void insert(T item) {
+        insert(item, false);
     }
 
-    public void insertItem(int position, T item) {
+    public void insert(T item, boolean reverse) {
+        insert(reverse ? 0 : mItems.size(), item);
+    }
+
+    public void insert(int position, T item) {
         mItems.add(position, item);
+        if (mOriginalItems != null) {
+            mOriginalItems.add(position, item);
+        }
         notifyItemInserted(position);
     }
 
-    public void insertItems(List<T> items) {
-        insertItems(items,false);
+    public void insertAll(List<T> items) {
+        insertAll(items, false);
     }
 
-    public void insertItems(List<T> items, boolean reverse) {
-        insertItems(reverse ? 0 : mItems.size(), items);
+    public void insertAll(List<T> items, boolean reverse) {
+        insertAll(reverse ? 0 : mItems.size(), items);
     }
 
-    public void insertItems(int position, List<T> items) {
+    public void insertAll(int position, List<T> items) {
         mItems.addAll(position, items);
+        if (mOriginalItems != null) {
+            mOriginalItems.addAll(position, items);
+        }
         notifyItemRangeInserted(position, items.size());
     }
 
-    public T removeItem(int position) {
+    public T remove(int position) {
         T removedItem = mItems.remove(position);
+        if (mOriginalItems != null) {
+            mOriginalItems.remove(position);
+        }
         notifyItemRemoved(position);
         return removedItem;
     }
 
-    public void removeItem(T item) {
-        final int removedPos = mItems.indexOf(item);
-        mItems.remove(item);
-        notifyItemRemoved(removedPos);
+    public void remove(T item) {
+        final int removePos = mItems.indexOf(item);
+        remove(removePos);
     }
 
-    public void removeItems(List<T> items) {
+    public void removeAll(List<T> items) {
         final int removedPosStart = mItems.indexOf(items.get(0));
         final int removedCount = items.size();
         mItems.removeAll(items);
+        if (mOriginalItems != null) {
+            mOriginalItems.removeAll(items);
+        }
         notifyItemRangeRemoved(removedPosStart, removedCount);
     }
 
-    public void changeItem(int position, T newItem) {
+    public void change(int position, T newItem) {
         mItems.set(position, newItem);
+        if (mOriginalItems != null) {
+            mOriginalItems.set(position, newItem);
+        }
         notifyItemChanged(position);
     }
 
-    public void moveItem(int fromPosition, int toPosition) {
+    public void move(int fromPosition, int toPosition) {
         T moveItem = mItems.remove(fromPosition);
         mItems.add(toPosition, moveItem);
+        if (mOriginalItems != null) {
+            T origMoveItem = mOriginalItems.remove(fromPosition);
+            mOriginalItems.add(toPosition, origMoveItem);
+        }
         notifyItemMoved(fromPosition, toPosition);
     }
 
@@ -196,4 +240,61 @@ public abstract class BaseAdapter<BVH extends BaseViewHolder, T> extends Recycle
     }
 
 
+    @Override
+    public Filter getFilter() {
+        if (mFilter == null) {
+            mFilter = new BaseFilter();
+        }
+        return mFilter;
+    }
+
+    /**
+     *
+     */
+    private class BaseFilter extends Filter {
+
+        BaseFilter() {
+            if (mOriginalItems == null) {
+                mOriginalItems = new ArrayList<>(mItems);
+            }
+        }
+
+        public void restore() {
+            mItems = mOriginalItems;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public CharSequence convertResultToString(Object resultValue) {
+            return super.convertResultToString(resultValue);
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            // 返回的查询结果
+            FilterResults results = new FilterResults();
+
+            if (Predications.isNullOrEmpty(constraint)) {
+                results.values = null;
+                results.count = 0;
+            } else {
+                List<T> originalCopy = new ArrayList<>(mOriginalItems);
+                //TODO
+
+            }
+            return results;
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            List<T> filteredItems = (List<T>) results.values;
+            if (filteredItems != null) {
+                mItems = filteredItems;
+            } else {
+                mItems.clear();
+            }
+            notifyDataSetChanged();
+        }
+    }
 }

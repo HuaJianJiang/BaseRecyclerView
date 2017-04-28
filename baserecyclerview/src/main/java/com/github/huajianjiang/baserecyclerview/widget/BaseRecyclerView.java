@@ -105,7 +105,7 @@ public class BaseRecyclerView extends RecyclerView {
             mAdapter.unregisterAdapterDataObserver(mObserver);
         if (mAdapter != null && mEmptyView != null)
             mAdapter.registerAdapterDataObserver(getObserver());
-        updateEmptyStatus(mAdapter == null || mAdapter.getItemCount() == 0);
+        updateEmptyStatus(shouldShowEmptyView());
     }
 
     private EmptyDataObserver getObserver() {
@@ -115,11 +115,18 @@ public class BaseRecyclerView extends RecyclerView {
         return mObserver;
     }
 
+    /**
+     *
+     */
     private class EmptyDataObserver extends RecyclerView.AdapterDataObserver {
         @Override
         public void onChanged() {
-            updateEmptyStatus(mAdapter == null || mAdapter.getItemCount() == 0);
+            updateEmptyStatus(shouldShowEmptyView());
         }
+    }
+
+    private boolean shouldShowEmptyView() {
+        return mAdapter == null || mAdapter.getItemCount() == 0;
     }
 
     private void updateEmptyStatus(boolean empty) {
@@ -133,6 +140,14 @@ public class BaseRecyclerView extends RecyclerView {
         } else {
             if (mEmptyView != null) mEmptyView.setVisibility(GONE);
             setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mAdapter != null && mObserver != null) {
+            mAdapter.unregisterAdapterDataObserver(mObserver);
         }
     }
 }
